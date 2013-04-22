@@ -1,0 +1,107 @@
+#overlayEffect {
+  display:none;
+  position:fixed;
+  opacity:0.7;
+  height:100%;
+  width:100%;
+  top:0;
+  left:0;
+  background: -moz-linear-gradient(rgba(11,11,11,0.1), rgba(11,11,11,0.6)) repeat-x rgba(11,11,11,0.2);
+  background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(11,11,11,0.1)), to(rgba(11,11,11,0.6))) repeat-x rgba(11,11,11,0.2);
+  z-index:1;
+}
+#popupContainer {
+  position:fixed;
+  left:50%;
+  top:50%;
+  width:500px;
+  background: #e5e5e5;
+  border:5px solid #cecece;
+  z-index:2;
+  padding:10px;
+  border: 1px solid rgba(33, 33, 33, 0.6);
+  -moz-box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
+  -webkit-box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
+}
+#popupContainer label {
+  float: left;
+  width: 20em;
+  margin-right: 1em;
+}
+#popupContainer input,  #popupContainer textarea {
+  width: 450px;
+  margin-left: 25px;
+}
+#popupContainer h1 {
+  text-align:left;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
+  color:#00a;
+  font-size:18px;
+  border-bottom:2px dotted #D3D3D3;
+  padding: 5px 2px;
+  margin-bottom:10px;
+}
+#popupContainer p {
+  font-size:12px;
+  line-height:1.4;
+}
+#closePopup {
+  cursor:pointer;
+  width:25px;
+  height:26px;
+  position:fixed;
+  z-index:3200;
+  position:absolute;
+  top:2px;
+  right:-20px;
+}
+#linkToolBar {
+  display:none;
+  width:200px;
+  height:20px;
+}
+#prodToolBar {
+  display:none;
+  width:170px;
+  height:20px;
+}
+
+.toolBar, .closePopup {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+  border: none;
+  cursor: pointer;
+  height: 16px;
+  padding-left: 16px;
+  vertical-align: middle;
+}
+.hidden { display:none; }
+
+.ezlTable {
+  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+  width:100%;
+  border-collapse:collapse;
+}
+.ezlTable td {
+  height: 12px;
+}
+.ezlTable td, .ezlTable th {
+  font-size:1em;
+  border:1px solid #98bf21;
+  padding:4px;
+  padding-bottom: 20px;
+}
+.ezlTable th {
+  font-size:1.1em;
+  text-align:left;
+  padding-top:5px;
+  padding-bottom:4px;
+  background-color:#A7C942;
+  color:#fff;
+}
+.ezlTable tr.alt td {
+  color:#000;
+  background-color:#EAF2D3;
+}
