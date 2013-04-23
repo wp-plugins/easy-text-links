@@ -3,7 +3,7 @@
   Plugin Name: Easy Text Links
   Plugin URI: http://www.thulasidas.com/plugins/easy-text-links
   Description: <em>Lite Version</em>: Make money from your blog by direct text link ad selling, with no complicated setup and no middlemen.
-  Version: 1.00
+  Version: 1.01
   Author: Manoj Thulasidas
   Author URI: http://www.thulasidas.com
  */
@@ -34,7 +34,7 @@ else {
     }
     function set($data) {
       foreach ($data as $k => $v) {
-        $this->{$k} = $v;
+        $this->{$k} = stripslashes($v);
       }
     }
   }
@@ -166,7 +166,9 @@ else {
     }
     function getText() {
       // TODO: A good place to add nofollow, if needed.
-      if (EzTextLinks::mkDateInt($this->expire_date) > time())
+      if (EzTextLinks::mkDateInt($this->expire_date) > time() &&
+              strtolower($this->status) != 'deleted' &&
+              strtolower($this->status) != 'hidden')
         return "<span class='ezlink' id='{$this->txn_id}'>{$this->text}</span>";
       else
         return "";
@@ -286,7 +288,7 @@ else {
         <label for='text'>Link Text:</label>
         <textarea id='text' $disabled>$link->text</textarea>
         <label for='status'>Link Status:</label>
-        <input id='status' $noMod value='{$link->status}' />
+        <input id='status' $disabled value='{$link->status}' />
         <label for='statusDate'>Link Status Change Date:</label>
         <input id='statusDate' $noMod value='$statusDate' />
         <label for='product_code'>Link Package Code:</label>
@@ -542,7 +544,7 @@ else {
               $_POST['confirm'] == "{$caller}_confirm");
       if ($confirmed) parse_str($_POST['data'], $data);
       return array($elem, $confirmed, $data);
-    }
+   }
    function updateOptions($elem, $data, $new=false) {
      $data['statusDate'] = time();
      $elem->set($data);
@@ -555,10 +557,10 @@ else {
        echo "Added a new element {$id} in $type";
        echo ":new:" . $this->renderTableRow($elem, $alt, $class);
      }
-     else{
+     else {
        echo "{$data['status']}: element {$id} in $type";
        echo ":modified:" . $this->renderTableRow($elem, $alt, $class) .
-             ":modified:#" . $elem->id();
+               ":modified:#" . $elem->id();
      }
      update_option($this->optionName, $this->options);
    }
@@ -624,7 +626,9 @@ else {
     function edit() {
       list($elem, $confirmed, $data) = $this->validate();
       if ($confirmed) {
-        $data['status'] = "Edited";
+        // change the status only if the user has left it empty
+        if (empty($data['status']))
+          $data['status'] = "Edited";
         $this->updateOptions($elem, $data);
       }
       else {
@@ -686,7 +690,8 @@ else {
         $display .= $linkToolBar;
         $display .= "<ul>" ;
         foreach ($links as $link) {
-          $display .=  "<li>" . $link->getText() . "</li>";
+          $text = $link->getText();
+          if (!empty($text)) $display .= "<li>$text</li>";
         }
         $display .= "</ul>" ;
       }

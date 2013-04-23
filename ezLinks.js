@@ -89,9 +89,14 @@
         $("#" + tableId+" tr:last").after(newRow).css('background','gold');
       }
       if (modifiedRow) {
-        var oldClass = $(rowId).attr('class');
-        $(rowId).replaceWith(modifiedRow);
-        $(rowId).attr('class', oldClass);
+        if (tableId) {
+          var oldClass = $(rowId).attr('class');
+          $(rowId).replaceWith(modifiedRow);
+          $(rowId).attr('class', oldClass);
+        }
+        else {
+          $(rowId).css("text-decoration", "line-through");
+        }
       }
       popup = false;
       showPopup( response );
@@ -105,6 +110,7 @@
     var height = $(this).outerHeight();
     linkId = $(this).attr('id');
     productId = '';
+    tableId = '';
     $("#linkToolbar").css({
         position: "absolute",
         top: (pos.top-height) + "px",

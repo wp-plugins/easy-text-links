@@ -4,7 +4,7 @@ Donate link: http://buy.thulasidas.com/easy-text-link
 Tags: text links, advertising, revenue, ezlinks, easy text links
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 1.00
+Stable tag: 1.01
 License: GPLv2 or later
 
 A robust and modern plugin to help you sell and manage text links on your blog.
@@ -39,7 +39,7 @@ A [pro version](http://buy.thulasidas.com/easy-text-link "Pro Version of Eazy Te
 
 == Upgrade Notice ==
 
-Initial public release.
+Handling blocked and deleted links.
 
 == Installation ==
 
@@ -54,7 +54,7 @@ To use the plugin, insert the shortcode `[ezlink]` in a post. See the FAQ for mo
 
 == Screenshots ==
 
-1. Links inserted by Easy Links Pro. Note the floating tool bar that appears when you hover over the link (if you are logged in as the admin to your blog) giving you easy access to the actions you can take.
+1. Links inserted by Easy Links Pro. Note the floating tool bar that appears when you hover over the link to your blog giving you easy access to the actions you can take.
 
 2. The Admin Page. The tool bar appears as you hover over a row in the Links Packages or Sold Links table.
 
@@ -90,8 +90,13 @@ The [Pro version](http://buy.thulasidas.com/easy-text-link "Pro Version of Eazy 
 
 The lite version does not offer a widget. The work around is to install the [Shortcode Widget](http://wordpress.org/extend/plugins/shortcode-widget/ "Shortcode Widget plugin from WordPress directory"). You can then place the `[ezlink]` shortcodes in the widgets provided by Shortcode Widget.
 
+= I deleted/blocked a link by mistake. Now it has disappeared. How do I get it back? =
+
+Go to the admin page of the plugin, and edit the Sold Link by clicking on the edit icon (green pencil) on the floating toolbar. You can then set the status to anything other than Deleted or Hidden.
+
 == Change Log ==
 
+* V1.01: Handling blocked and deleted links. [Apr 23, 2013]
 * V1.00: Initial release. [Apr 20, 2012]
 
 = Future Plans =
