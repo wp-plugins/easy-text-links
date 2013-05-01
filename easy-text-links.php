@@ -4,7 +4,7 @@
   Plugin Name: Easy Text Links
   Plugin URI: http://www.thulasidas.com/plugins/easy-text-links
   Description: <em>Lite Version</em>: Make money from your blog by direct text link ad selling, with no complicated setup and no middlemen.
-  Version: 1.10
+  Version: 1.11
   Author: Manoj Thulasidas
   Author URI: http://www.thulasidas.com
  */
@@ -383,7 +383,11 @@ else {
     function EzTextLinks() { //constructor
       $this->plgURL = plugins_url(basename(dirname(__FILE__)));
       $this->optionName = "ezTextLinks";
-      $this->options = array_merge($this->mkDefaultOptions(), get_option($this->optionName));
+      $savedOptions = get_option($this->optionName);
+      if (empty($savedOptions))
+        $this->options = $this->mkDefaultOptions();
+      else
+        $this->options = array_merge($this->mkDefaultOptions(), $savedOptions);
       $this->actions = array("email" => "Email Advertiser",
           "delete" => "Delete this Ad",
           "hide" => "Block this Ad",
