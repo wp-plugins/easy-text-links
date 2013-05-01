@@ -72,20 +72,20 @@ $adminLinkTable
 <td colspan="3">
 <table style="width:100%;padding:10px;">
 <tr>
-<th scope="row" colspan=1 style="width:50%">
+<th scope="row" style="width:50%">
 Email Template
+</th>
 <th scope="row" style="width:50%">
 Other Options
 </th>
 </tr>
-<tr>
 <tr>
   <td>
     <small>These UPPERCSE words will be replaced by their values:<br /> BLOG, EXPIRY</small><br />
     <textarea id="emailTemplate" name="emailTemplate" style="width:95%;height:70px;">{$this->options['emailTemplate']}
     </textarea>
   </td>
-  <td colspan=2>
+  <td>
     Title for "Advertise Here" invite:<br />
     <input id="adHereTitle" name="adHereTitle" style="width:95%;"
       value="{$this->options['adHereTitle']}" />

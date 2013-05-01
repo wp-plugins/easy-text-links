@@ -1,9 +1,10 @@
 <?php
+
 /*
   Plugin Name: Easy Text Links
   Plugin URI: http://www.thulasidas.com/plugins/easy-text-links
   Description: <em>Lite Version</em>: Make money from your blog by direct text link ad selling, with no complicated setup and no middlemen.
-  Version: 1.01
+  Version: 1.10
   Author: Manoj Thulasidas
   Author URI: http://www.thulasidas.com
  */
@@ -20,51 +21,75 @@ if (class_exists("EzTextLinks")) {
   die(__("<strong><em>Easy Text Links:</em></strong> Another version of this plugin is active.<br />Please deactivate it before activating <strong><em>Easy Text Links</em></strong>.", "easy-adsenser"));
 }
 else {
+
   class EzlBase {
+
     var $created, $comment, $status, $statusDate, $plgURL;
-    function EzlBase(){
+
+    function EzlBase() {
       $this->plgURL = plugins_url(basename(dirname(__FILE__)));
       $this->created = EzTextLinks::mkDateString(time());
       $this->status = 'created';
       $this->statusDate = $this->created;
     }
+
     function mkDateStrings() {
       $this->created = EzTextLinks::mkDateString($this->created);
       $this->statusDate = EzTextLinks::mkDateString($this->statusDate);
     }
+
     function set($data) {
       foreach ($data as $k => $v) {
-        $this->{$k} = stripslashes($v);
+        if ($k == 'txn_id' || $k == 'product_code') {
+          $this->{$k} = $this->sanitize($v);
+          // TODO: also ensure that it is not duplicated -- probabaly in the caller
+        }
+        else
+          $this->{$k} = stripslashes($v);
       }
     }
+
+    function sanitize($id) {
+      $ret = trim($id, " \t\n\r\0\x0B");
+      $ret = str_replace(' ', '', $ret);
+      return $ret;
+    }
+
   }
 
   class EzlProduct extends EzlBase {
+
     var $product_price, $expire_hours, $product_code, $product_name;
+
     function EzlProduct($code) {
-      $this->product_code = $code;
+      $this->product_code = $this->sanitize($code);
       parent::EzlBase();
     }
+
     function id() {
       return $this->product_code;
     }
+
     function className() {
-      return "adminProdTable" ;
+      return "adminProdTable";
     }
+
     function type() {
-      return "products" ;
+      return "products";
     }
+
     function add($data = false) {
       if ($data) {
         $product = new self($data['product_code']);
         $product->set($data);
       }
       else {
-        $product = new self("New Link Package");
-        self::form($formName='add', $product);
+        $product = new self("NewLinkPackage");
+        self::form($formName = 'add', $product);
       }
       return $product;
     }
+
     function delete() {
       echo "<div id='delete_form'>
         This link package (id={$this->product_code}) will be deleted.
@@ -73,6 +98,7 @@ else {
         style='background-image:url({$this->plgURL}/confirm.png)'></button>
         </div>";
     }
+
     function hide() {
       echo "<div id='hide_form'>
         This Link Package (id={$this->product_code}) will be suspended.
@@ -81,16 +107,19 @@ else {
         style='background-image:url({$this->plgURL}/confirm.png)'></button>
         </div>";
     }
-    function edit($formName='edit') {
+
+    function edit($formName = 'edit') {
       EzlProduct::form($formName, $this);
     }
-    static function form($formName, $product){
-      switch($formName) {
+
+    static function form($formName, $product) {
+      switch ($formName) {
         case 'edit' :
           $disabled = "";
           $noMod = "disabled='disabled'";
           $button = "<button id='{$formName}_confirm'
-            style='background-image:url({$product->plgURL}/confirm.png)' class='toolBar'></button>";
+            style='background-image:url({$product->plgURL}/confirm.png)'
+              class='toolBar'></button>";
           break;
         case 'info' :
           $disabled = "disabled='disabled'";
@@ -101,7 +130,8 @@ else {
           $disabled = "";
           $noMod = "";
           $button = "<button id='{$formName}_confirm'
-            style='background-image:url({$product->plgURL}/confirm.png)' class='toolBar'></button>";
+            style='background-image:url({$product->plgURL}/confirm.png)'
+              class='toolBar'></button>";
           break;
         default :
           echo "Unknown form name!";
@@ -131,10 +161,11 @@ else {
         $button
         </div>";
     }
+
     function getCols() {
       $lookup = array(
           'product_code' => 'ID',
-                    'product_name' => 'Name',
+          'product_name' => 'Name',
           'product_price' => 'Price',
           'expire_hours' => 'Default Expiry (hours)',
           'status' => 'Status');
@@ -144,26 +175,35 @@ else {
       }
       return $cols;
     }
+
   }
 
   class EzlSale extends EzlBase {
+
     var $txn_id, $created, $customer_name, $customer_email, $purchase_status,
             $expire_date, $product_code;
+
     function EzlSale($txnId) {
+      $txnId = $this->sanitize($txnId);
       $this->txn_id = $txnId;
       parent::EzlBase();
     }
+
   }
 
   class EzlLink extends EzlSale {
+
     var $text;
+
     function EzlLink($txnId) {
       parent::EzlSale($txnId);
     }
+
     function setText($text) {
       // TODO: enforce length, trim to have only one <a>
       $this->text = $text;
     }
+
     function getText() {
       // TODO: A good place to add nofollow, if needed.
       if (EzTextLinks::mkDateInt($this->expire_date) > time() &&
@@ -173,15 +213,19 @@ else {
       else
         return "";
     }
+
     function id() {
       return $this->txn_id;
     }
+
     function className() {
-      return "adminLinkTable" ;
+      return "adminLinkTable";
     }
+
     function type() {
-      return "links" ;
+      return "links";
     }
+
     function email($message) {
       $to = $this->customer_email;
       $from = get_bloginfo('admin_email');
@@ -205,6 +249,7 @@ else {
         class='toolBar'></button>
         </div>";
     }
+
     function add($data = false) {
       if ($data) {
         $link = new self($data['txn_id']);
@@ -212,10 +257,11 @@ else {
         return $link;
       }
       else {
-        $link = new self("New Link");
-        self::form($formName='add', $link);
+        $link = new self("NewLink");
+        self::form($formName = 'add', $link);
       }
     }
+
     function delete() {
       echo "<div id='delete_form'>
         This link (id={$this->txn_id}) will be deleted.
@@ -225,6 +271,7 @@ else {
         style='background-image:url({$this->plgURL}/confirm.png)'></button>
         </div>";
     }
+
     function hide() {
       echo "<div id='hide_form'>
         This link (id={$this->txn_id}) will be hidden.
@@ -234,6 +281,7 @@ else {
         style='background-image:url({$this->plgURL}/confirm.png)'></button>
         </div>";
     }
+
     function expiry() {
       $expiry = EzTextLinks::mkDateString($this->expire_date);
       echo "<div id='expiry_form'>
@@ -244,11 +292,13 @@ else {
         style='background-image:url({$this->plgURL}/confirm.png)'></button>
         </div>";
     }
-    function edit($formName='edit') {
+
+    function edit($formName = 'edit') {
       self::form($formName, $this);
     }
-    static function form($formName, $link){
-      switch($formName) {
+
+    static function form($formName, $link) {
+      switch ($formName) {
         case 'edit' :
           $disabled = "";
           $noMod = "disabled='disabled'";
@@ -299,6 +349,7 @@ else {
         $button
         </div>";
     }
+
     function getCols() {
       $lookup = array('txn_id' => 'ID',
           'customer_name' => 'Buyer',
@@ -310,26 +361,29 @@ else {
           'text' => 'Text',
           'status' => 'Status',
 //          'statusDate' => 'Effective'
-          );
+      );
       $cols = array();
       foreach ($lookup as $k => $v) {
         $cols[$v] = htmlentities($this->$k);
       }
       return $cols;
     }
+
   }
 
   class EzTextLinks {
+
     var $options, $optionName, $plgURL, $actions, $linkToolBar, $popUp;
     private $adminMsg = '';
+
     const shortCode = 'ezlink';
+
     static $linkPage = false, $linkToolBarEmpty = true;
 
     function EzTextLinks() { //constructor
       $this->plgURL = plugins_url(basename(dirname(__FILE__)));
       $this->optionName = "ezTextLinks";
-      $this->options = array_merge($this->mkDefaultOptions(),
-              get_option($this->optionName));
+      $this->options = array_merge($this->mkDefaultOptions(), get_option($this->optionName));
       $this->actions = array("email" => "Email Advertiser",
           "delete" => "Delete this Ad",
           "hide" => "Block this Ad",
@@ -338,19 +392,23 @@ else {
           "info" => "View Link Details");
       if (is_admin())
         $this->actions = array("add" => "Add a New Ad Link Sale") +
-              $this->actions;
+                $this->actions;
       $this->popUp = "<div id='popupContainer' class='hidden'>
-<a id='closePopup' class='hidden closePopup' title='close popup' style='background-image:url({$this->plgURL}/delete.png)'></a>
+<a id='closePopup' class='hidden closePopup' title='close popup'
+style='background-image:url({$this->plgURL}/delete.png)'></a>
 <h1 id='ezPopupHeader'></h1>
 <p id='ezPopupResponse'></p>
 </div>
 <span id='overlayEffect'></span>";
-      if (is_admin()) $style = "style='display:none;'";
-      else $style = "style='display:none;background-color:rgba(0,0,0,0.6);'";
+      if (is_admin())
+        $style = "style='display:none;'";
+      else
+        $style = "style='display:none;background-color:rgba(0,0,0,0.6);'";
       $this->linkToolBar = "<span id='linkToolbar' $style>";
       foreach ($this->actions as $k => $a) {
-        $this->linkToolBar .= "<input id='$k' class='toolBar' type='button' style='background-image:url({$this->plgURL}/$k.png)' title='$a' value=' '/>";
-        }
+        $this->linkToolBar .= "<input id='$k' class='toolBar' type='button'
+          style='background-image:url({$this->plgURL}/$k.png)' title='$a' value=' '/>";
+      }
       $this->linkToolBar .= "</span>";
       $prodActions = array("add" => "Add a New Link Package",
           "delete" => "Delete this Package",
@@ -359,8 +417,10 @@ else {
           "info" => "View Package Details");
       $this->prodToolBar = "<span id='prodToolbar' style='display:none'>";
       foreach ($prodActions as $k => $a) {
-        $this->prodToolBar .= "<input id='{$k}_prod' class='toolBar' type='button' style='background-image:url({$this->plgURL}/$k.png)' title='$a' value=' ' />";
-        }
+        $this->prodToolBar .= "<input id='{$k}_prod' class='toolBar'
+          type='button' style='background-image:url({$this->plgURL}/$k.png)'
+          title='$a' value=' ' />";
+      }
       $this->prodToolBar .= "</span>";
     }
 
@@ -387,16 +447,14 @@ else {
     }
 
     function addScripts() {
-      if (!self::$linkPage && !is_admin()) return;
-      wp_register_script('ezTextLinksJS0', "{$this->plgURL}/ezLinks.js",
-              array('jquery'), '2.0', true);
+      if (!self::$linkPage && !is_admin())
+        return;
+      wp_register_script('ezTextLinksJS0', "{$this->plgURL}/ezLinks.js", array('jquery'), '2.0', true);
       wp_enqueue_script('ezTextLinksJS0');
       if (current_user_can('manage_options')) {
-        wp_localize_script('ezTextLinksJS0', 'EzlAjax',
-                array('ajaxurl' => admin_url('admin-ajax.php'),
-                    'nonce' => wp_create_nonce('EzlAjaxNonce')));
-        wp_register_script('ezTextLinksJS1', "{$this->plgURL}/wz_tooltip.js",
-                array(), '2.0', true);
+        wp_localize_script('ezTextLinksJS0', 'EzlAjax', array('ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('EzlAjaxNonce')));
+        wp_register_script('ezTextLinksJS1', "{$this->plgURL}/wz_tooltip.js", array(), '2.0', true);
         wp_enqueue_script('ezTextLinksJS1');
       }
     }
@@ -417,50 +475,48 @@ else {
       $links = array();
 
       $link = new EzlLink("link1");
-      $link->customer_name= "Advertiser 1";
-      $link->customer_email= "nobody@mail.com";
-      $link->purchase_status= "active";
-      $link->expire_date= self::mkDateString("2014-03-17 13:17:31");
-      $link->product_code= "package1";
+      $link->customer_name = "Advertiser 1";
+      $link->customer_email = "nobody@mail.com";
+      $link->purchase_status = "active";
+      $link->expire_date = self::mkDateString("2014-03-17 13:17:31");
+      $link->product_code = "package1";
       $link->setText("<a href='http://www.example1.com'>First Example Link Sale</a>");
       $links[$link->txn_id] = $link;
 
       $link = new EzlLink("link2");
-      $link->customer_name= "Advertiser 2";
-      $link->customer_email= "nobody@mail.com";
-      $link->purchase_status= "active";
-      $link->expire_date= self::mkDateString("2015-03-17 13:17:31");
-      $link->product_code= "package2";
+      $link->customer_name = "Advertiser 2";
+      $link->customer_email = "nobody@mail.com";
+      $link->purchase_status = "active";
+      $link->expire_date = self::mkDateString("2015-03-17 13:17:31");
+      $link->product_code = "package2";
       $link->setText("<a href='http://www.example2.com'>Second Example Link Sale</a>");
       $links[$link->txn_id] = $link;
 
-      $emailTemplate = "Your link on BLOG will perhaps expire on EXPIRY. Would you like to renew it?" ;
+      $emailTemplate = "Your link on BLOG will perhaps expire on EXPIRY. Would you like to renew it?";
 
-      $adHereTitle = "Advertise Here" ;
-      $adHereURL = "/advertise-here" ;
-      $adHereTemplate = "More information" ;
-      $options = compact('products',
-              'links',
-              'emailTemplate',
-              'adHereTitle',
-              'adHereURL',
-              'adHereTemplate');
+      $adHereTitle = "Advertise Here";
+      $adHereURL = "/advertise-here";
+      $adHereTemplate = "More information";
+      $options = compact('products', 'links', 'emailTemplate', 'adHereTitle', 'adHereURL', 'adHereTemplate');
 
       return $options;
     }
 
     function handleSubmits() {
-      if (empty($_POST)) return;
+      if (empty($_POST))
+        return;
       if (!empty($_POST['reset_ezTextLinks'])) {
         $this->options = $this->mkDefaultOptions();
-        $this->adminMsg = '<div class="updated"><p><strong>All options reset to defaults.</strong></p> </div>';
+        $this->adminMsg = '<div class="updated">
+          <p><strong>All options reset to defaults.</strong></p> </div>';
       }
       else if (!empty($_POST['update_ezTextLinks'])) {
         $toUpdate = array_intersect_key($this->options, $_POST);
         foreach ($toUpdate as $k => $v) {
           $this->options[$k] = $_POST[$k];
         }
-        $this->adminMsg = '<div class="updated"><p><strong>Your options have been updated.</strong></p> </div>';
+        $this->adminMsg = '<div class="updated"><p>
+          <strong>Your options have been updated.</strong></p> </div>';
       }
       update_option($this->optionName, $this->options);
     }
@@ -483,12 +539,15 @@ else {
 
     function renderTableHeader($rows, $id) {
       $ret = '';
-      if (empty($rows) || !is_array($rows)) return $ret;
+      if (empty($rows) || !is_array($rows))
+        return $ret;
       reset($rows);
       $elem = current($rows);
       $cols = $elem->getCols();
-      if (empty($cols) || !is_array($cols)) return $ret;
-      if (!empty($id)) $id = "id='$id'";
+      if (empty($cols) || !is_array($cols))
+        return $ret;
+      if (!empty($id))
+        $id = "id='$id'";
       $ret .= sprintf("<table class='ezlTable' $id><tr>");
       foreach ($cols as $k => $v) {
         $ret .= sprintf("<th>%s</th>", $k);
@@ -502,9 +561,12 @@ else {
       $cols = $elem->getCols();
       reset($cols);
       $id = current($cols);
-      $ret .= sprintf("<tr class='$alt $class' id='$id'>\n");
-      if ($alt == "") $alt = "alt";
-      else $alt = "";
+      $classes = trim("$alt $class");
+      $ret .= sprintf("<tr class='$classes' id='$id'>\n");
+      if ($alt == "")
+        $alt = "alt";
+      else
+        $alt = "";
       foreach ($cols as $v) {
         $ret .= sprintf("<td>%s</td>\n", $v);
       }
@@ -519,7 +581,7 @@ else {
     }
 
 // AJAX handlers
-   function validate() {
+    function validate() {
       if (!current_user_can('manage_options')) {
         echo "Sorry, you are not authorized to do this!";
         exit;
@@ -540,41 +602,45 @@ else {
       }
       $callers = debug_backtrace();
       $caller = $callers[1]['function'];
-      $confirmed =  (!empty($_POST['confirm']) &&
+      $confirmed = (!empty($_POST['confirm']) &&
               $_POST['confirm'] == "{$caller}_confirm");
-      if ($confirmed) parse_str($_POST['data'], $data);
+      if ($confirmed)
+        parse_str($_POST['data'], $data);
       return array($elem, $confirmed, $data);
-   }
-   function updateOptions($elem, $data, $new=false) {
-     $data['statusDate'] = time();
-     $elem->set($data);
-     $class = $elem->className();
-     $id = $elem->id();
-     $type = $elem->type();
-     if ($new) {
-       $this->options[$type][$id] = $elem;
-       $alt = "new";
-       echo "Added a new element {$id} in $type";
-       echo ":new:" . $this->renderTableRow($elem, $alt, $class);
-     }
-     else {
-       echo "{$data['status']}: element {$id} in $type";
-       echo ":modified:" . $this->renderTableRow($elem, $alt, $class) .
-               ":modified:#" . $elem->id();
-     }
-     update_option($this->optionName, $this->options);
-   }
+    }
+
+    function updateOptions($elem, $data, $new = false) {
+      $data['statusDate'] = time();
+      $elem->set($data);
+      $class = $elem->className();
+      $id = $elem->id();
+      $type = $elem->type();
+      if ($new) {
+        $this->options[$type][$id] = $elem;
+        $alt = "new";
+        echo "Added a new element {$id} in $type";
+        echo ":new:" . $this->renderTableRow($elem, $alt, $class);
+      }
+      else {
+        echo "{$data['status']}: element {$id} in $type";
+        echo ":modified:" . $this->renderTableRow($elem, $alt, $class) .
+        ":modified:#" . $elem->id();
+      }
+      update_option($this->optionName, $this->options);
+    }
+
     function add() {
       list($elem, $confirmed, $data) = $this->validate();
       if ($confirmed) {
         $newElem = $elem->add($data);
-        $this->updateOptions($newElem, $data, $new=true);
-        }
+        $this->updateOptions($newElem, $data, $new = true);
+      }
       else {
         $elem->add();
       }
       exit;
-   }
+    }
+
     function delete() {
       list($elem, $confirmed, $data) = $this->validate();
       if ($confirmed) {
@@ -586,20 +652,24 @@ else {
         $elem->delete();
       }
       exit;
-   }
+    }
+
     function email() {
       list($elem, $confirmed, $data) = $this->validate();
       if ($confirmed) {
         extract($data);
         // $headers = "From: $from\r\n";
-        if (wp_mail($to, $subject, $message)) echo "Emailed!";
-        else echo "Error sending email!";
+        if (wp_mail($to, $subject, $message))
+          echo "Emailed!";
+        else
+          echo "Error sending email!";
       }
       else {
         $elem->email($this->options['emailTemplate']);
       }
       exit;
     }
+
     function hide() {
       list($elem, $confirmed, $data) = $this->validate();
       if ($confirmed) {
@@ -612,6 +682,7 @@ else {
       }
       exit;
     }
+
     function expiry() {
       list($elem, $confirmed, $data) = $this->validate();
       if ($confirmed) {
@@ -623,6 +694,7 @@ else {
       }
       exit;
     }
+
     function edit() {
       list($elem, $confirmed, $data) = $this->validate();
       if ($confirmed) {
@@ -636,9 +708,10 @@ else {
       }
       exit;
     }
+
     function info() {
       list($elem, $confirmed, $data) = $this->validate();
-      $elem->edit($formName='info');
+      $elem->edit($formName = 'info');
       exit;
     }
 
@@ -664,13 +737,13 @@ else {
         $display .= "<a href='{$this->options['adHereURL']}'>{$this->options['adHereTemplate']}</a>";
       }
       if (in_array("packages", $atts) ||
-              array_key_exists("packages", $atts)){ // show packages
+              array_key_exists("packages", $atts)) { // show packages
         $products = $this->options['products'];
-        $display .= "<ul>" ;
+        $display .= "<ul>";
         foreach ($products as $product) {
-          $display .=  "<li>{$product->product_name} for only {$product->product_price}</li>";
-          }
-          $display .= "</ul>" ;
+          $display .= "<li>{$product->product_name} for only {$product->product_price}</li>";
+        }
+        $display .= "</ul>";
       }
       if (in_array("links", $atts)) { // show all links
         $links = $this->options['links'];
@@ -688,29 +761,32 @@ else {
       }
       if (!empty($links)) {
         $display .= $linkToolBar;
-        $display .= "<ul>" ;
+        $display .= "<ul>";
         foreach ($links as $link) {
           $text = $link->getText();
-          if (!empty($text)) $display .= "<li>$text</li>";
+          if (!empty($text))
+            $display .= "<li>$text</li>";
         }
-        $display .= "</ul>" ;
+        $display .= "</ul>";
       }
       if (array_key_exists("option", $atts) &&
               strtolower($atts['option']) == "nolist") {
-        $display = str_replace(array('<ul>','<ol>','<li>','</li>','<ol>','<ul>'),
-                '', $display);
+        $display = str_replace(array('<ul>', '<ol>', '<li>', '</li>', '<ol>', '<ul>'), '', $display);
       }
-      $display .= "<!-- Easy Text Links - end -->" ;
+      $display .= "<!-- Easy Text Links - end -->";
       return $display;
     }
+
     function addPopup($content) {
-      if (current_user_can('manage_options')) $content = $this->popUp . $content;
+      if (current_user_can('manage_options'))
+        $content = $this->popUp . $content;
       return $content;
     }
 
 // Date utilities
     static function mkDateString($intOrStr) {
-      if (empty($intOrStr)) return "";
+      if (empty($intOrStr))
+        return "";
       if (is_int($intOrStr))
         $dateStr = date('Y-m-d H:i:s', $intOrStr);
       else
@@ -725,13 +801,17 @@ else {
         $dateInt = strtotime($intOrStr);
       return $dateInt;
     }
+
   }
+
 } //End Class ezTextLinks
 
 if (!function_exists('ezprint')) {
+
   function ezprint($data) {
     printf("<pre>%s</pre>", print_r($data, true));
   }
+
 }
 if (class_exists("EzTextLinks")) {
   $ezTextLinks = new Eztextlinks();
@@ -739,19 +819,21 @@ if (class_exists("EzTextLinks")) {
     add_shortcode(Eztextlinks::shortCode, array($ezTextLinks, 'handleShortcode'));
     add_action('wp_enqueue_scripts', array($ezTextLinks, 'addStyles'));
     add_action('wp_enqueue_scripts', array($ezTextLinks, 'addScripts'));
-    if (is_admin()) add_action('admin_enqueue_scripts', array($ezTextLinks,
-        'addScripts'));
+    if (is_admin())
+      add_action('admin_enqueue_scripts', array($ezTextLinks,
+          'addScripts'));
     add_filter('the_posts', array("Eztextlinks", "findShortCode"));
     add_filter('the_content', array($ezTextLinks, 'addPopup'));
     if (is_admin()) {
+
       function ezTextLinks_ap() {
         global $ezTextLinks;
         if (function_exists('add_options_page')) {
           $mName = 'Easy Text Links';
-          add_options_page($mName, $mName, 'activate_plugins', basename(__FILE__),
-            array($ezTextLinks, 'printAdminPage'));
+          add_options_page($mName, $mName, 'activate_plugins', basename(__FILE__), array($ezTextLinks, 'printAdminPage'));
         }
       }
+
       add_action('admin_menu', 'ezTextLinks_ap');
       foreach ($ezTextLinks->actions as $k => $a) {
         add_action("wp_ajax_$k", array($ezTextLinks, $k));
