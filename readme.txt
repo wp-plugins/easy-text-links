@@ -76,6 +76,8 @@ You can specify an option in the shortcode as `[ezlink option=nolist]`. This opt
 
 You insert the shortcode `[ezlink invite]` (or `[ezlink advertise]` or `[ezlink here]`) to display such an invitation.
 
+Note that you have to create the target page/post with a title like "Advertise Here" or something similar and point to it on the plugin admin page (under the *"Advertise Here" Target:"* option). Once that is done, your `[ezlink invite]` shortcode will point to that page/post. In that page, you can use `[ezlink packages]` shortcode to list your link packages, and give any contact details so that your advertisers can get in touch with you.
+
 = Can I have a full list of shortcode keywords and syntax? =
 
 1. List packages (within `<ul>...</ul>`) : `[ezlink packages]`.
