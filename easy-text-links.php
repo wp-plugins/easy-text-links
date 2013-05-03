@@ -4,7 +4,7 @@
   Plugin Name: Easy Text Links
   Plugin URI: http://www.thulasidas.com/plugins/easy-text-links
   Description: <em>Lite Version</em>: Make money from your blog by direct text link ad selling, with no complicated setup and no middlemen.
-  Version: 1.11
+  Version: 1.20
   Author: Manoj Thulasidas
   Author URI: http://www.thulasidas.com
  */
@@ -160,6 +160,14 @@ else {
         <br />
         $button
         </div>";
+    }
+
+    function getText() {
+      if (strtolower($this->status) != 'deleted' &&
+              strtolower($this->status) != 'hidden')
+        return "<span class='ezlinkProdcut' id='{$this->product_code}'>{$this->product_name} for only {$this->product_price}</span>";
+      else
+        return "";
     }
 
     function getCols() {
@@ -733,23 +741,7 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
       self::$linkPage = true;
 
       $display = "<!-- Easy Text Links - begin -->";
-      $display .= $linkToolBar;
-      if (in_array("invite", $atts) ||
-              in_array("advertise", $atts) ||
-              in_array("here", $atts)) { // show Advertise Here
-        $display .= "<h2>{$this->options['adHereTitle']}</h2>";
-        $display .= "<a href='{$this->options['adHereURL']}'>{$this->options['adHereTemplate']}</a>";
-      }
-      if (in_array("packages", $atts) ||
-              array_key_exists("packages", $atts)) { // show packages
-        $products = $this->options['products'];
-        $display .= "<ul>";
-        foreach ($products as $product) {
-          $display .= "<li>{$product->product_name} for only {$product->product_price}</li>";
-        }
-        $display .= "</ul>";
-      }
-      if (in_array("links", $atts)) { // show all links
+      if (empty($atts) || in_array("links", $atts)) { // show all links
         $links = $this->options['links'];
       }
       else if (array_key_exists("links", $atts)) { // show only selected links
@@ -760,7 +752,7 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
             $links[$id] = $this->options['links'][$id];
         }
       }
-      else {
+      else { // no links to be shown
         $links = array();
       }
       if (!empty($links)) {
@@ -773,9 +765,30 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
         }
         $display .= "</ul>";
       }
-      if (array_key_exists("option", $atts) &&
-              strtolower($atts['option']) == "nolist") {
-        $display = str_replace(array('<ul>', '<ol>', '<li>', '</li>', '<ol>', '<ul>'), '', $display);
+      if (!empty($atts)) {
+        if (in_array("invite", $atts) ||
+                in_array("advertise", $atts) ||
+                in_array("here", $atts)) { // show Advertise Here
+          $display .= "<h2>{$this->options['adHereTitle']}</h2>";
+          $display .= "<a href='{$this->options['adHereURL']}'>{$this->options['adHereTemplate']}</a>";
+        }
+        if (in_array("packages", $atts) ||
+                array_key_exists("packages", $atts)) { // show packages
+          $products = $this->options['products'];
+          $display .= "<ul>";
+          foreach ($products as $product) {
+            $text = $product->getText();
+            if (!empty($text))
+              $display .= "<li>$text</li>";
+          }
+          $display .= "</ul>";
+        }
+        if (array_key_exists("option", $atts) &&
+                strtolower($atts['option']) == "nolist") { // kill list
+          $display = str_replace(
+                  array('<ul>', '<ol>', '<li>', '</li>', '<ol>', '<ul>'),
+                  '', $display);
+        }
       }
       $display .= "<!-- Easy Text Links - end -->";
       return $display;

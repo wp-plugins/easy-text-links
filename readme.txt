@@ -4,7 +4,7 @@ Donate link: http://buy.thulasidas.com/easy-text-link
 Tags: text links, advertising, revenue, ezlinks, easy text links
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 1.11
+Stable tag: 1.20
 License: GPLv2 or later
 
 A robust and modern plugin to help you sell and manage text links on your blog.
@@ -39,7 +39,7 @@ A [pro version](http://buy.thulasidas.com/easy-text-link "Pro Version of Eazy Te
 
 == Upgrade Notice ==
 
-Minor bug fix.
+Handling empty attributes in shortcode, and hidden and deleted packages.
 
 == Installation ==
 
@@ -96,6 +96,7 @@ Go to the admin page of the plugin, and edit the Sold Link by clicking on the ed
 
 == Change Log ==
 
+* V1.20: Handling empty attributes in shortcode, and hidden and deleted packages. [May 3, 2013]
 * V1.11: Minor bug fix. [May 2, 2013]
 * V1.10: Correcting W3C markup validation errors on the admin page. [May 1, 2013]
 * V1.01: Handling blocked and deleted links. [Apr 23, 2013]
