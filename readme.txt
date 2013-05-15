@@ -4,7 +4,7 @@ Donate link: http://buy.thulasidas.com/easy-text-link
 Tags: text links, advertising, revenue, ezlinks, easy text links
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 1.20
+Stable tag: 1.21
 License: GPLv2 or later
 
 A robust and modern plugin to help you sell and manage text links on your blog.
@@ -30,16 +30,18 @@ If you have a popular blog, text links can potentially bring in much more revenu
 
 = Pro Version =
 
-A [pro version](http://buy.thulasidas.com/easy-text-link "Pro Version of Eazy Text Links for $7.95") of this plugin is in the works with the following added features:
+A [pro version](http://buy.thulasidas.com/easy-text-link "Pro Version of Eazy Text Links for $7.95") of this plugin is available with the following added features:
 
 1. Fully automated link sales and expiry (with the help of the [Easy PayPal](http://wordpress.org/extend/plugins/easy-paypal-lte/ "Easy PayPal Plugin") plugin available at WordPress.
-2. Automatic email reminders to you and your advertiser when the links are about to expire.
-3. Choice of several attractive "Advertise Here" images.
-4. Widget support.
+2. Your advertisers will see "Buy Now" buttons to purchase links.
+3. Basic widget support.
+4. Automatic email reminders to you and your advertiser when the links are about to expire. (WIP)
+5. Choice of several attractive "Advertise Here" images. (WIP)
+6. Advanced widget support with a dedicated widget. (WIP)
 
 == Upgrade Notice ==
 
-Handling empty attributes in shortcode, and hidden and deleted packages.
+Bug fix on displaying the link toolbar. Documentation and help changes.
 
 == Installation ==
 
@@ -54,7 +56,7 @@ To use the plugin, insert the shortcode `[ezlink]` in a post. See the FAQ for mo
 
 == Screenshots ==
 
-1. Links inserted by Easy Links Pro. Note the floating tool bar that appears when you hover over the link to your blog giving you easy access to the actions you can take.
+1. Links inserted by Easy Links Pro. Note the floating tool bar that appears when you hover over the link (if you are logged in as the admin to your blog) giving you easy access to the actions you can take.
 
 2. The Admin Page. The tool bar appears as you hover over a row in the Links Packages or Sold Links table.
 
@@ -81,14 +83,14 @@ Note that you have to create the target page/post with a title like "Advertise H
 = Can I have a full list of shortcode keywords and syntax? =
 
 1. List packages (within `<ul>...</ul>`) : `[ezlink packages]`.
-2. List all links (within `<ul>...</ul>`) : `[ezlink packages]`
+2. List all links (within `<ul>...</ul>`) : `[ezlink links]`
 3. List specific links (within `<ul>...</ul>`) : `[ezlink links=link1,link2,link3...]`.
 4. Suppress `<ul><li>...</li></ul>` around any of the lists above : `[ezlink option=nolist ...]`
 5. Advertise Here display : `[ezlink invite]` or `[ezlink advertise]` or `[ezlink here]`
 
 = How can I get the links or packages in a widget? =
 
-The [Pro version](http://buy.thulasidas.com/easy-text-link "Pro Version of Eazy Text Links for $7.95") version of *Easy Text Links* gives you a dedicated and multi-insertable widget with fully configurable text links.
+The [Pro version](http://buy.thulasidas.com/easy-text-link "Pro Version of Eazy Text Links for $7.95") version of *Easy Text Links* gives you basic support for widgets. You can use the WordPress default Text widget to insert the shortcode and it will be rendered as expected.  A dedicated and multi-insertable widget with fully configurable text links will be released later.
 
 The lite version does not offer a widget. The work around is to install the [Shortcode Widget](http://wordpress.org/extend/plugins/shortcode-widget/ "Shortcode Widget plugin from WordPress directory"). You can then place the `[ezlink]` shortcodes in the widgets provided by Shortcode Widget.
 
@@ -98,6 +100,7 @@ Go to the admin page of the plugin, and edit the Sold Link by clicking on the ed
 
 == Change Log ==
 
+* V1.21: Bug fix on displaying the link toolbar. Documentation and help changes. [May 15, 2013]
 * V1.20: Handling empty attributes in shortcode, and hidden and deleted packages. [May 3, 2013]
 * V1.11: Minor bug fix. [May 2, 2013]
 * V1.10: Correcting W3C markup validation errors on the admin page. [May 1, 2013]

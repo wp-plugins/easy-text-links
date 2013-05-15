@@ -103,7 +103,7 @@ Other Options
 </table>
 <div class="submit">
 <input type="submit" name="update_ezTextLinks" value="Save Changes" title="Save the changes as specified above" onmouseover="Tip('Save the changes as specified above',WIDTH, 240, TITLE, 'Save Changes')" onmouseout="UnTip()"/>
-<input type="submit" id="resetOptions" name="reset_ezTextLinks" value="Reset to Defaults" title="Discard all the colors and reset them to the default values" onmouseover="TagToTip('reset',WIDTH, 240, TITLE, 'DANGER!', BGCOLOR, '#ffcccc', FONTCOLOR, '#800000',BORDERCOLOR, '#c00000')" onmouseout="UnTip()" />
+<input type="submit" id="resetOptions" name="reset_ezTextLinks" value="Reset to Defaults" title="Discard all the options and reset them to the default values" onmouseover="TagToTip('reset',WIDTH, 240, TITLE, 'DANGER!', BGCOLOR, '#ffcccc', FONTCOLOR, '#800000',BORDERCOLOR, '#c00000')" onmouseout="UnTip()" />
 </div>
 </form>
 <hr />
@@ -118,7 +118,7 @@ This plugin uses shortcodes to place your links and your "Advertise Here" invita
 Please use the following shortcode and keywords to display your links on your pages and posts.
 <ol>
 <li>List packages (within <code>&lt;ul&gt;...&lt;/ul&gt;</code>) : <code>[ezlink packages]</code>.</li>
-<li>List all links (within <code>&lt;ul&gt;...&lt;/ul&gt;</code>) : <code>[ezlink packages]</code></li>
+<li>List all links (within <code>&lt;ul&gt;...&lt;/ul&gt;</code>) : <code>[ezlink links]</code></li>
 <li>List specific links (within <code>&lt;ul&gt;...&lt;/ul&gt;</code>) : <code>[ezlink links=link1,link2,link3...]</code>.</li>
 <li>Suppress <code>&lt;ul&gt;&lt;li&gt;...&lt;/li&gt;&lt;/ul&gt;</code> around any of the lists above : <code>[ezlink option=nolist ...]</code></li>
 <li>Advertise Here display : <code>[ezlink invite]</code> or <code>[ezlink advertise]</code> or <code>[ezlink here]</code></li>

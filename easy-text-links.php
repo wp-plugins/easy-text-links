@@ -4,7 +4,7 @@
   Plugin Name: Easy Text Links
   Plugin URI: http://www.thulasidas.com/plugins/easy-text-links
   Description: <em>Lite Version</em>: Make money from your blog by direct text link ad selling, with no complicated setup and no middlemen.
-  Version: 1.20
+  Version: 1.21
   Author: Manoj Thulasidas
   Author URI: http://www.thulasidas.com
  */
@@ -730,9 +730,9 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
 // Short code handler
     function handleShortcode($atts, $content = '') {
       extract(shortcode_atts(array("id" => ""), $atts));
-      $linkToolBar = '';
+      $display = "\n<!-- Easy Text Links - begin -->\n";
       if (self::$linkToolBarEmpty && current_user_can('manage_options')) {
-        $linkToolBar = $this->linkToolBar;
+        $display .= $this->linkToolBar;
         foreach ($this->actions as $k => $a) {
           add_action("wp_ajax_$k", "{$k}_callback");
         }
@@ -740,7 +740,6 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
       }
       self::$linkPage = true;
 
-      $display = "<!-- Easy Text Links - begin -->";
       if (empty($atts) || in_array("links", $atts)) { // show all links
         $links = $this->options['links'];
       }
@@ -756,7 +755,6 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
         $links = array();
       }
       if (!empty($links)) {
-        $display .= $linkToolBar;
         $display .= "<ul>";
         foreach ($links as $link) {
           $text = $link->getText();
@@ -790,7 +788,7 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
                   '', $display);
         }
       }
-      $display .= "<!-- Easy Text Links - end -->";
+      $display .= "\n<!-- Easy Text Links - end -->\n";
       return $display;
     }
 
@@ -847,7 +845,8 @@ if (class_exists("EzTextLinks")) {
         global $ezTextLinks;
         if (function_exists('add_options_page')) {
           $mName = 'Easy Text Links';
-          add_options_page($mName, $mName, 'activate_plugins', basename(__FILE__), array($ezTextLinks, 'printAdminPage'));
+          add_options_page($mName, $mName, 'activate_plugins',
+                  basename(__FILE__), array($ezTextLinks, 'printAdminPage'));
         }
       }
 
