@@ -4,7 +4,7 @@ Donate link: http://buy.thulasidas.com/easy-text-link
 Tags: text links, advertising, revenue, ezlinks, easy text links
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 1.21
+Stable tag: 1.30
 License: GPLv2 or later
 
 A robust and modern plugin to help you sell and manage text links on your blog.
@@ -27,6 +27,7 @@ If you have a popular blog, text links can potentially bring in much more revenu
 4. Convenience of managing your links (delete, block, set expiry, email advertiser etc.) right from your blog post where the link appears, without going to the plugin admin page.
 5. Attractive and modern interface with lightbox effect.
 6. Highly secure and robust against potential hacker attacks and attempts to manipulate links.
+7. Now available in your own language using machine translation curtsey of Google and Microsoft.
 
 = Pro Version =
 
@@ -100,6 +101,7 @@ Go to the admin page of the plugin, and edit the Sold Link by clicking on the ed
 
 == Change Log ==
 
+* V1.30: Now available in your own language using machine translation curtsey of Google and Microsoft. [May 22, 2013]
 * V1.21: Bug fix on displaying the link toolbar. Documentation and help changes. [May 15, 2013]
 * V1.20: Handling empty attributes in shortcode, and hidden and deleted packages. [May 3, 2013]
 * V1.11: Minor bug fix. [May 2, 2013]
@@ -113,7 +115,6 @@ Go to the admin page of the plugin, and edit the Sold Link by clicking on the ed
 2. More fields in templates (BUYER, PACKAGENAME etc.)
 3. Making package and link expiry specification flexible (today, tomorrow, +-nd/w/m/y)
 4. Widget support (Pro version).
-5. Integration with Easy PayPal (Pro version).
-6. Use JSON in AJAX-jQuery communication for standard compliance.
-7. Style the admin tables to match WordPress admin themes.
-8. Internationalization.
+5. Use JSON in AJAX-jQuery communication for standard compliance.
+6. Style the admin tables to match WordPress admin themes.
+

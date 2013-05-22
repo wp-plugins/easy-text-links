@@ -176,4 +176,4 @@ Type in YES (all capitals) to confirm.") === "YES") return true;
     else return false;
   });
 
-} ,jQuery);
+}, jQuery);
