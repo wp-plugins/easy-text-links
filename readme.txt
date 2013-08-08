@@ -1,10 +1,10 @@
 === Easy Text Links ===
 Contributors: manojtd
-Donate link: http://buy.thulasidas.com/easy-text-link
+Donate link: http://buy.thulasidas.com/easy-text-links
 Tags: text links, advertising, revenue, ezlinks, easy text links
 Requires at least: 3.5
-Tested up to: 3.5
-Stable tag: 1.30
+Tested up to: 3.6
+Stable tag: 1.40
 License: GPLv2 or later
 
 A robust and modern plugin to help you sell and manage text links on your blog.
@@ -31,7 +31,7 @@ If you have a popular blog, text links can potentially bring in much more revenu
 
 = Pro Version =
 
-A [pro version](http://buy.thulasidas.com/easy-text-link "Pro Version of Eazy Text Links for $7.95") of this plugin is available with the following added features:
+A [pro version](http://buy.thulasidas.com/easy-text-links "Pro Version of Eazy Text Links for $7.95") of this plugin is available with the following added features:
 
 1. Fully automated link sales and expiry (with the help of the [Easy PayPal](http://wordpress.org/extend/plugins/easy-paypal-lte/ "Easy PayPal Plugin") plugin available at WordPress.
 2. Your advertisers will see "Buy Now" buttons to purchase links.
@@ -42,7 +42,7 @@ A [pro version](http://buy.thulasidas.com/easy-text-link "Pro Version of Eazy Te
 
 == Upgrade Notice ==
 
-Bug fix on displaying the link toolbar. Documentation and help changes.
+Compatibility with WP3.6.
 
 == Installation ==
 
@@ -91,7 +91,7 @@ Note that you have to create the target page/post with a title like "Advertise H
 
 = How can I get the links or packages in a widget? =
 
-The [Pro version](http://buy.thulasidas.com/easy-text-link "Pro Version of Eazy Text Links for $7.95") version of *Easy Text Links* gives you basic support for widgets. You can use the WordPress default Text widget to insert the shortcode and it will be rendered as expected.  A dedicated and multi-insertable widget with fully configurable text links will be released later.
+The [Pro version](http://buy.thulasidas.com/easy-text-links "Pro Version of Eazy Text Links for $7.95") version of *Easy Text Links* gives you basic support for widgets. You can use the WordPress default Text widget to insert the shortcode and it will be rendered as expected.  A dedicated and multi-insertable widget with fully configurable text links will be released later.
 
 The lite version does not offer a widget. The work around is to install the [Shortcode Widget](http://wordpress.org/extend/plugins/shortcode-widget/ "Shortcode Widget plugin from WordPress directory"). You can then place the `[ezlink]` shortcodes in the widgets provided by Shortcode Widget.
 
@@ -101,6 +101,7 @@ Go to the admin page of the plugin, and edit the Sold Link by clicking on the ed
 
 == Change Log ==
 
+* V1.40: Compatibility with WP3.6. [Aug 8, 2013]
 * V1.30: Now available in your own language using machine translation curtsey of Google and Microsoft. [May 22, 2013]
 * V1.21: Bug fix on displaying the link toolbar. Documentation and help changes. [May 15, 2013]
 * V1.20: Handling empty attributes in shortcode, and hidden and deleted packages. [May 3, 2013]
