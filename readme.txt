@@ -3,8 +3,8 @@ Contributors: manojtd
 Donate link: http://buy.thulasidas.com/easy-text-links
 Tags: text links, advertising, revenue, ezlinks, easy text links
 Requires at least: 3.5
-Tested up to: 3.6
-Stable tag: 1.40
+Tested up to: 3.7
+Stable tag: 1.50
 License: GPLv2 or later
 
 A robust and modern plugin to help you sell and manage text links on your blog.
@@ -42,7 +42,7 @@ A [pro version](http://buy.thulasidas.com/easy-text-links "Pro Version of Eazy T
 
 == Upgrade Notice ==
 
-Compatibility with WP3.6.
+Compatibility checks for WordPress V3.7. Bug fix related to hidden admin page.
 
 == Installation ==
 
@@ -101,6 +101,7 @@ Go to the admin page of the plugin, and edit the Sold Link by clicking on the ed
 
 == Change Log ==
 
+* V1.50: Compatibility checks for WordPress V3.7. Bug fix related to hidden admin page. [Nov 11, 2013]
 * V1.40: Compatibility with WP3.6. [Aug 8, 2013]
 * V1.30: Now available in your own language using machine translation curtsey of Google and Microsoft. [May 22, 2013]
 * V1.21: Bug fix on displaying the link toolbar. Documentation and help changes. [May 15, 2013]

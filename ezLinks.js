@@ -159,10 +159,10 @@
     }
   });
 
-  $(document).ready(function() {
-    $("#ezlWrap").hide();
-    $("#loading").show();
-  });
+//  $(document).ready(function() {
+//    $("#ezlWrap").hide();
+//    $("#loading").show();
+//  });
 
   window.onload = function(){
     $("#ezlWrap").fadeIn("slow");
