@@ -19,7 +19,7 @@ echo <<<EOF1
 {$this->prodToolBar}
 {$this->popUp}
 <link rel='stylesheet' id='ezTextLinksCSS-css'  href='{$this->plgURL}/ezLinks.css' type='text/css' media='all' />
-<div class="wrap" id="ezlWrap" style="width:810px;display:none;">
+<div class="wrap" id="ezlWrap" style="width:1000px;display:none;">
 <h2>Easy Text Links Setup </h2>
 <form method="post" action='{$_SERVER["REQUEST_URI"]}'>
 <table>
@@ -136,8 +136,8 @@ echo '<div style="background-color:#fcf;padding:5px;border: solid 1px;margin:5px
 echo '</div>' ;
 @include (dirname (__FILE__).'/tail-text.php');
 echo <<<EOF3
-<table>
-<tr><th scope="row">Credits</th></tr>
+<h3>Credits</h3>
+<table style="width:100%;padding:10px;">
 <tr><td>
 <ul style="padding-left:10px;list-style-type:circle; list-style-position:inside;" >
 <li>

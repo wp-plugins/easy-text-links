@@ -3,8 +3,8 @@ Contributors: manojtd
 Donate link: http://buy.thulasidas.com/easy-text-links
 Tags: text links, advertising, revenue, ezlinks, easy text links
 Requires at least: 3.5
-Tested up to: 3.7
-Stable tag: 1.50
+Tested up to: 3.8
+Stable tag: 1.60
 License: GPLv2 or later
 
 A robust and modern plugin to help you sell and manage text links on your blog.
@@ -33,7 +33,7 @@ If you have a popular blog, text links can potentially bring in much more revenu
 
 A [pro version](http://buy.thulasidas.com/easy-text-links "Pro Version of Eazy Text Links for $7.95") of this plugin is available with the following added features:
 
-1. Fully automated link sales and expiry (with the help of the [Easy PayPal](http://wordpress.org/extend/plugins/easy-paypal-lte/ "Easy PayPal Plugin") plugin available at WordPress.
+1. Fully automated link sales and expiry (with the help of the [Easy PayPal](http://wordpress.org/extend/plugins/easy-paypal-lte/ "Easy PayPal Plugin") plugin available at WordPress.)
 2. Your advertisers will see "Buy Now" buttons to purchase links.
 3. Basic widget support.
 4. Automatic email reminders to you and your advertiser when the links are about to expire. (WIP)
@@ -42,7 +42,7 @@ A [pro version](http://buy.thulasidas.com/easy-text-links "Pro Version of Eazy T
 
 == Upgrade Notice ==
 
-Compatibility checks for WordPress V3.7. Bug fix related to hidden admin page.
+Compatibility checks for WordPress V3.8. Minor formattin change on admin page.
 
 == Installation ==
 
@@ -101,6 +101,7 @@ Go to the admin page of the plugin, and edit the Sold Link by clicking on the ed
 
 == Change Log ==
 
+* V1.60: Compatibility checks for WordPress V3.7. Minor formattin change on admin page. [Dec 19, 2013]
 * V1.50: Compatibility checks for WordPress V3.7. Bug fix related to hidden admin page. [Nov 11, 2013]
 * V1.40: Compatibility with WP3.6. [Aug 8, 2013]
 * V1.30: Now available in your own language using machine translation curtsey of Google and Microsoft. [May 22, 2013]
