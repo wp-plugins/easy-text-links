@@ -1,14 +1,37 @@
 <?php
+
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+  Copyright (C) 2008 www.ads-ez.com
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$plgName = 'easy-text-links' ;
-$this->handleSubmits() ;
-echo $this->adminMsg ;
-@include(dirname (__FILE__).'/myPlugins.php');
-$ezIsPro = false;
+// if translating, print translation interface
+if ($this->ezTran->printAdminPage()) {
+  return;
+}
+require_once($this->plgDir . '/myPlugins.php');
+$slug = $this->slug;
+$plgURL = $this->plgURL;
+$plg = $this->myPlugins[$slug];
+require_once($this->plgDir . '/EzAdmin.php');
+$this->ezAdmin = new EzAdmin($plg, $slug, $plgURL);
+$this->ezAdmin->domain = $this->domain;
+$ez = $this->ezAdmin;
+
+$this->handleSubmits();
+echo $this->adminMsg;
 $adminProdTable = $this->renderTable($this->options['products'], "adminProdTable");
 $adminLinkTable = $this->renderTable($this->options['links'], "adminLinkTable");
 echo <<<EOF1
@@ -19,7 +42,7 @@ echo <<<EOF1
 {$this->prodToolBar}
 {$this->popUp}
 <link rel='stylesheet' id='ezTextLinksCSS-css'  href='{$this->plgURL}/ezLinks.css' type='text/css' media='all' />
-<div class="wrap" id="ezlWrap" style="width:1000px;display:none;">
+<div class="wrap" id="ezlWrap" style="width:1000px;">
 <h2>Easy Text Links Setup </h2>
 <form method="post" action='{$_SERVER["REQUEST_URI"]}'>
 <table>
@@ -49,7 +72,7 @@ How to modify a sold link or a link package?
 </ul>
 </td>
 EOF1;
-@include (dirname (__FILE__).'/head-text.php');
+@include ($this->plgDir . '/head-text.php');
 echo <<<EOF2
 </tr>
 <tr><th scope="row" colspan=3>
@@ -131,10 +154,13 @@ Hover over any line item in a row on the tables below. You will get a toolbar to
 <span style="font-color=#f00;">This <b>Reset Options</b> button discards all your changes and loads the default options. This is your only warning!</span><br />
 <b>Discard all your changes and load defaults. (Are you quite sure?)</b></span>
 EOF2;
-echo '<div style="background-color:#fcf;padding:5px;border: solid 1px;margin:5px;">' ;
-@include (dirname (__FILE__).'/support.php');
-echo '</div>' ;
-@include (dirname (__FILE__).'/tail-text.php');
+echo "<form method='post'>";
+$ez->renderTranslator();
+echo "</form><br />";
+echo '<div style="background-color:#fcf;padding:5px;border: solid 1px;margin:5px;">';
+$ez->renderSupport();
+echo '</div>';
+include ($this->plgDir . '/tail-text.php');
 echo <<<EOF3
 <h3>Credits</h3>
 <table style="width:100%;padding:10px;">

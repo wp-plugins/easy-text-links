@@ -4,17 +4,27 @@
   Plugin Name: Easy Text Links
   Plugin URI: http://www.thulasidas.com/plugins/easy-text-links
   Description: <em>Lite Version</em>: Make money from your blog by direct text link ad selling, with no complicated setup and no middlemen.
-  Version: 1.60
+  Version: 2.00
   Author: Manoj Thulasidas
   Author URI: http://www.thulasidas.com
  */
 
 /*
-  License: GPL2 or later
-  Copyright (C) 2008 www.thulasidas.com
- */
+  Copyright (C) 2008 www.ads-ez.com
 
-// namespace EzTextLinks;
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 if (class_exists("EzTextLinks")) {
   // Another version is probably installed. Ask the user to deactivate it.
@@ -27,7 +37,7 @@ else {
     var $created, $comment, $status, $statusDate, $plgURL;
 
     function EzlBase() {
-      $this->plgURL = plugins_url(basename(dirname(__FILE__)));
+      $this->plgURL = plugin_dir_url(__FILE__);
       $this->created = EzTextLinks::mkDateString(time());
       $this->status = 'created';
       $this->statusDate = $this->created;
@@ -44,8 +54,9 @@ else {
           $this->{$k} = $this->sanitize($v);
           // TODO: also ensure that it is not duplicated -- probabaly in the caller
         }
-        else
+        else {
           $this->{$k} = stripslashes($v);
+        }
       }
     }
 
@@ -164,10 +175,12 @@ else {
 
     function getText() {
       if (strtolower($this->status) != 'deleted' &&
-              strtolower($this->status) != 'hidden')
+              strtolower($this->status) != 'hidden') {
         return "<span class='ezlinkProdcut' id='{$this->product_code}'>{$this->product_name} for only {$this->product_price}</span>";
-      else
+      }
+      else {
         return "";
+      }
     }
 
     function getCols() {
@@ -216,10 +229,12 @@ else {
       // TODO: A good place to add nofollow, if needed.
       if (EzTextLinks::mkDateInt($this->expire_date) > time() &&
               strtolower($this->status) != 'deleted' &&
-              strtolower($this->status) != 'hidden')
+              strtolower($this->status) != 'hidden') {
         return "<span class='ezlink' id='{$this->txn_id}'>{$this->text}</span>";
-      else
+      }
+      else {
         return "";
+      }
     }
 
     function id() {
@@ -381,30 +396,35 @@ else {
 
   class EzTextLinks {
 
-    var $options, $optionName, $plgURL, $actions, $linkToolBar, $popUp;
+    var $options, $optionName, $actions, $linkToolBar, $popUp;
     private $adminMsg = '';
+    var $slug, $domain, $plgDir, $plgURL, $ezTran, $ezAdmin, $myPlugins;
 
     const shortCode = 'ezlink';
 
     static $linkPage = false, $linkToolBarEmpty = true;
 
     function EzTextLinks() { //constructor
-      $this->plgURL = plugins_url(basename(dirname(__FILE__)));
+      $this->plgDir = dirname(__FILE__);
+      $this->plgURL = plugin_dir_url(__FILE__);
       $this->optionName = "ezTextLinks";
       $savedOptions = get_option($this->optionName);
-      if (empty($savedOptions))
+      if (empty($savedOptions)) {
         $this->options = $this->mkDefaultOptions();
-      else
+      }
+      else {
         $this->options = array_merge($this->mkDefaultOptions(), $savedOptions);
+      }
       $this->actions = array("email" => "Email Advertiser",
           "delete" => "Delete this Ad",
           "hide" => "Block this Ad",
           "expiry" => "Change the Expiry Date",
           "edit" => "Edit Link Details",
           "info" => "View Link Details");
-      if (is_admin())
+      if (is_admin()) {
         $this->actions = array("add" => "Add a New Ad Link Sale") +
                 $this->actions;
+      }
       $this->popUp = "<div id='popupContainer' class='hidden'>
 <a id='closePopup' class='hidden closePopup' title='close popup'
 style='background-image:url({$this->plgURL}/delete.png)'></a>
@@ -412,10 +432,12 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
 <p id='ezPopupResponse'></p>
 </div>
 <span id='overlayEffect'></span>";
-      if (is_admin())
+      if (is_admin()) {
         $style = "style='display:none;'";
-      else
+      }
+      else {
         $style = "style='display:none;background-color:rgba(0,0,0,0.6);'";
+      }
       $this->linkToolBar = "<span id='linkToolbar' $style>";
       foreach ($this->actions as $k => $a) {
         $this->linkToolBar .= "<input id='$k' class='toolBar' type='button'
@@ -434,12 +456,19 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
           title='$a' value=' ' />";
       }
       $this->prodToolBar .= "</span>";
+      if (is_admin()){
+        require_once($this->plgDir . '/EzTran.php');
+        $this->domain = $this->slug = 'easy-text-links';
+        $this->ezTran = new EzTran(__FILE__, "Easy Text Links", $this->domain);
+        $this->ezTran->setLang();
+      }
     }
 
     static function findShortCode($posts) {
       self::$linkPage = false;
-      if (empty($posts))
+      if (empty($posts)) {
         return $posts;
+      }
       foreach ($posts as $post) {
         if (stripos($post->post_content, self::shortCode) !== false) {
           self::$linkPage = true;
@@ -450,17 +479,20 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
     }
 
     function addStyles() {
-      if (!self::$linkPage)
+      if (!self::$linkPage) {
         return;
-      if (is_admin())
+      }
+      if (is_admin()) {
         return;
+      }
       wp_register_style('ezTextLinksCSS', "{$this->plgURL}/ezLinks.css");
       wp_enqueue_style('ezTextLinksCSS');
     }
 
     function addScripts() {
-      if (!self::$linkPage && !is_admin())
+      if (!self::$linkPage && !is_admin()) {
         return;
+      }
       wp_register_script('ezTextLinksJS0', "{$this->plgURL}/ezLinks.js", array('jquery'), '2.0', true);
       wp_enqueue_script('ezTextLinksJS0');
       if (current_user_can('manage_options')) {
@@ -515,8 +547,9 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
     }
 
     function handleSubmits() {
-      if (empty($_POST))
+      if (empty($_POST)) {
         return;
+      }
       if (!empty($_POST['reset_ezTextLinks'])) {
         $this->options = $this->mkDefaultOptions();
         $this->adminMsg = '<div class="updated">
@@ -551,15 +584,18 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
 
     function renderTableHeader($rows, $id) {
       $ret = '';
-      if (empty($rows) || !is_array($rows))
+      if (empty($rows) || !is_array($rows)) {
         return $ret;
+      }
       reset($rows);
       $elem = current($rows);
       $cols = $elem->getCols();
-      if (empty($cols) || !is_array($cols))
+      if (empty($cols) || !is_array($cols)) {
         return $ret;
-      if (!empty($id))
+      }
+      if (!empty($id)) {
         $id = "id='$id'";
+      }
       $ret .= sprintf("<table class='ezlTable' $id><tr>");
       foreach ($cols as $k => $v) {
         $ret .= sprintf("<th>%s</th>", $k);
@@ -575,10 +611,12 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
       $id = current($cols);
       $classes = trim("$alt $class");
       $ret .= sprintf("<tr class='$classes' id='$id'>\n");
-      if ($alt == "")
+      if ($alt == "") {
         $alt = "alt";
-      else
+      }
+      else {
         $alt = "";
+      }
       foreach ($cols as $v) {
         $ret .= sprintf("<td>%s</td>\n", $v);
       }
@@ -604,10 +642,12 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
         exit;
       }
       $elem = $data = false;
-      if (!empty($_POST['linkId']))
+      if (!empty($_POST['linkId'])) {
         $elem = $this->options['links'][$_POST['linkId']];
-      else if (!empty($_POST['productId']))
+      }
+      else if (!empty($_POST['productId'])) {
         $elem = $this->options['products'][$_POST['productId']];
+      }
       if (!$elem) {
         echo "Link {$_POST['linkId']} or Product {$_POST['productId']} could not be located. Please select one.";
         exit;
@@ -616,8 +656,9 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
       $caller = $callers[1]['function'];
       $confirmed = (!empty($_POST['confirm']) &&
               $_POST['confirm'] == "{$caller}_confirm");
-      if ($confirmed)
+      if ($confirmed) {
         parse_str($_POST['data'], $data);
+      }
       return array($elem, $confirmed, $data);
     }
 
@@ -671,10 +712,12 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
       if ($confirmed) {
         extract($data);
         // $headers = "From: $from\r\n";
-        if (wp_mail($to, $subject, $message))
+        if (wp_mail($to, $subject, $message)) {
           echo "Emailed!";
-        else
+        }
+        else {
           echo "Error sending email!";
+        }
       }
       else {
         $elem->email($this->options['emailTemplate']);
@@ -711,8 +754,9 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
       list($elem, $confirmed, $data) = $this->validate();
       if ($confirmed) {
         // change the status only if the user has left it empty
-        if (empty($data['status']))
+        if (empty($data['status'])) {
           $data['status'] = "Edited";
+        }
         $this->updateOptions($elem, $data);
       }
       else {
@@ -747,8 +791,9 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
         $linkIds = explode(',', $atts['links']);
         $links = array();
         foreach ($linkIds as $id) {
-          if (!empty($this->options['links'][$id]))
+          if (!empty($this->options['links'][$id])) {
             $links[$id] = $this->options['links'][$id];
+          }
         }
       }
       else { // no links to be shown
@@ -758,8 +803,9 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
         $display .= "<ul>";
         foreach ($links as $link) {
           $text = $link->getText();
-          if (!empty($text))
+          if (!empty($text)) {
             $display .= "<li>$text</li>";
+          }
         }
         $display .= "</ul>";
       }
@@ -776,16 +822,16 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
           $display .= "<ul>";
           foreach ($products as $product) {
             $text = $product->getText();
-            if (!empty($text))
+            if (!empty($text)) {
               $display .= "<li>$text</li>";
+            }
           }
           $display .= "</ul>";
         }
         if (array_key_exists("option", $atts) &&
                 strtolower($atts['option']) == "nolist") { // kill list
           $display = str_replace(
-                  array('<ul>', '<ol>', '<li>', '</li>', '<ol>', '<ul>'),
-                  '', $display);
+                  array('<ul>', '<ol>', '<li>', '</li>', '<ol>', '<ul>'), '', $display);
         }
       }
       $display .= "\n<!-- Easy Text Links - end -->\n";
@@ -793,27 +839,33 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
     }
 
     function addPopup($content) {
-      if (current_user_can('manage_options'))
+      if (current_user_can('manage_options')) {
         $content = $this->popUp . $content;
+      }
       return $content;
     }
 
 // Date utilities
     static function mkDateString($intOrStr) {
-      if (empty($intOrStr))
+      if (empty($intOrStr)) {
         return "";
-      if (is_int($intOrStr))
+      }
+      if (is_int($intOrStr)) {
         $dateStr = date('Y-m-d H:i:s', $intOrStr);
-      else
+      }
+      else {
         $dateStr = date('Y-m-d H:i:s', strtotime($intOrStr));
+      }
       return $dateStr;
     }
 
     static function mkDateInt($intOrStr) {
-      if (is_int($intOrStr))
+      if (is_int($intOrStr)) {
         $dateInt = $intOrStr;
-      else
+      }
+      else {
         $dateInt = strtotime($intOrStr);
+      }
       return $dateInt;
     }
 
@@ -834,9 +886,10 @@ if (class_exists("EzTextLinks")) {
     add_shortcode(Eztextlinks::shortCode, array($ezTextLinks, 'handleShortcode'));
     add_action('wp_enqueue_scripts', array($ezTextLinks, 'addStyles'));
     add_action('wp_enqueue_scripts', array($ezTextLinks, 'addScripts'));
-    if (is_admin())
+    if (is_admin()) {
       add_action('admin_enqueue_scripts', array($ezTextLinks,
           'addScripts'));
+    }
     add_filter('the_posts', array("Eztextlinks", "findShortCode"));
     add_filter('the_content', array($ezTextLinks, 'addPopup'));
     if (is_admin()) {
@@ -845,8 +898,7 @@ if (class_exists("EzTextLinks")) {
         global $ezTextLinks;
         if (function_exists('add_options_page')) {
           $mName = 'Easy Text Links';
-          add_options_page($mName, $mName, 'activate_plugins',
-                  basename(__FILE__), array($ezTextLinks, 'printAdminPage'));
+          add_options_page($mName, $mName, 'activate_plugins', basename(__FILE__), array($ezTextLinks, 'printAdminPage'));
         }
       }
 
