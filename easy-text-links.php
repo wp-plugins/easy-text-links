@@ -4,7 +4,7 @@
   Plugin Name: Easy Text Links
   Plugin URI: http://www.thulasidas.com/plugins/easy-text-links
   Description: <em>Lite Version</em>: Make money from your blog by direct text link ad selling, with no complicated setup and no middlemen.
-  Version: 2.00
+  Version: 2.10
   Author: Manoj Thulasidas
   Author URI: http://www.thulasidas.com
  */
@@ -27,8 +27,10 @@
  */
 
 if (class_exists("EzTextLinks")) {
-  // Another version is probably installed. Ask the user to deactivate it.
-  die(__("<strong><em>Easy Text Links:</em></strong> Another version of this plugin is active.<br />Please deactivate it before activating <strong><em>Easy Text Links</em></strong>.", "easy-adsenser"));
+  $plg = "Easy Text Links Lite";
+  $lite = plugin_basename(__FILE__);
+  include_once('ezDenyLite.php');
+  ezDenyLite($plg, $lite);
 }
 else {
 
@@ -400,6 +402,8 @@ else {
     private $adminMsg = '';
     var $slug, $domain, $plgDir, $plgURL, $ezTran, $ezAdmin, $myPlugins;
 
+    static $shortCodes = array();
+
     const shortCode = 'ezlink';
 
     static $linkPage = false, $linkToolBarEmpty = true;
@@ -456,7 +460,7 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
           title='$a' value=' ' />";
       }
       $this->prodToolBar .= "</span>";
-      if (is_admin()){
+      if (is_admin()) {
         require_once($this->plgDir . '/EzTran.php');
         $this->domain = $this->slug = 'easy-text-links';
         $this->ezTran = new EzTran(__FILE__, "Easy Text Links", $this->domain);
@@ -550,12 +554,12 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
       if (empty($_POST)) {
         return;
       }
-      if (!empty($_POST['reset_ezTextLinks'])) {
+      if (!empty($_POST['resetOptions'])) {
         $this->options = $this->mkDefaultOptions();
         $this->adminMsg = '<div class="updated">
           <p><strong>All options reset to defaults.</strong></p> </div>';
       }
-      else if (!empty($_POST['update_ezTextLinks'])) {
+      else if (!empty($_POST['updateOptions'])) {
         $toUpdate = array_intersect_key($this->options, $_POST);
         foreach ($toUpdate as $k => $v) {
           $this->options[$k] = $_POST[$k];
@@ -894,12 +898,14 @@ if (class_exists("EzTextLinks")) {
     add_filter('the_content', array($ezTextLinks, 'addPopup'));
     if (is_admin()) {
 
-      function ezTextLinks_ap() {
-        global $ezTextLinks;
-        if (function_exists('add_options_page')) {
+      if (!function_exists('ezTextLinks_ap')) {
+
+        function ezTextLinks_ap() {
+          global $ezTextLinks;
           $mName = 'Easy Text Links';
           add_options_page($mName, $mName, 'activate_plugins', basename(__FILE__), array($ezTextLinks, 'printAdminPage'));
         }
+
       }
 
       add_action('admin_menu', 'ezTextLinks_ap');

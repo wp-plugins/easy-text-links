@@ -21,7 +21,7 @@
 if ($this->ezTran->printAdminPage()) {
   return;
 }
-require_once($this->plgDir . '/myPlugins.php');
+require($this->plgDir . '/myPlugins.php');
 $slug = $this->slug;
 $plgURL = $this->plgURL;
 $plg = $this->myPlugins[$slug];
@@ -34,6 +34,7 @@ $this->handleSubmits();
 echo $this->adminMsg;
 $adminProdTable = $this->renderTable($this->options['products'], "adminProdTable");
 $adminLinkTable = $this->renderTable($this->options['links'], "adminLinkTable");
+
 echo <<<EOF1
 <div id="loading">
   <p><img src="{$this->plgURL}/loading.gif" alt="loading"/> Please Wait. Loading...</p>
@@ -125,8 +126,9 @@ Other Options
 </tr>
 </table>
 <div class="submit">
-<input type="submit" name="update_ezTextLinks" value="Save Changes" title="Save the changes as specified above" onmouseover="Tip('Save the changes as specified above',WIDTH, 240, TITLE, 'Save Changes')" onmouseout="UnTip()"/>
-<input type="submit" id="resetOptions" name="reset_ezTextLinks" value="Reset to Defaults" title="Discard all the options and reset them to the default values" onmouseover="TagToTip('reset',WIDTH, 240, TITLE, 'DANGER!', BGCOLOR, '#ffcccc', FONTCOLOR, '#800000',BORDERCOLOR, '#c00000')" onmouseout="UnTip()" />
+<input type="submit" name="updateOptions" value="Save Changes" title="Save the changes as specified above" onmouseover="Tip('Save the changes as specified above',WIDTH, 240, TITLE, 'Save Changes')" onmouseout="UnTip()"/>
+<input type="submit" name="migrateOptions" value="Migrate Options" title="Migrate your existing options to the current version" onmouseover="Tip('<b><i>This Button is not active yet</i></b><br />Migrate your existing options to the current version. This is done by merging your current options to the default options. If option migration does not work, please note down your current options, reset them and re-enter them.',WIDTH, 240, TITLE, 'Migrate Changes')" onmouseout="UnTip()"/>
+<input type="submit" id="resetOptions" name="resetOptions" value="Reset to Defaults" title="Discard all the options and reset them to the default values" onmouseover="TagToTip('reset',WIDTH, 240, TITLE, 'DANGER!', BGCOLOR, '#ffcccc', FONTCOLOR, '#800000',BORDERCOLOR, '#c00000')" onmouseout="UnTip()" />
 </div>
 </form>
 <hr />
@@ -154,12 +156,11 @@ Hover over any line item in a row on the tables below. You will get a toolbar to
 <span style="font-color=#f00;">This <b>Reset Options</b> button discards all your changes and loads the default options. This is your only warning!</span><br />
 <b>Discard all your changes and load defaults. (Are you quite sure?)</b></span>
 EOF2;
-echo "<form method='post'>";
-$ez->renderTranslator();
-echo "</form><br />";
-echo '<div style="background-color:#fcf;padding:5px;border: solid 1px;margin:5px;">';
+// TODO Translator is not ready yet
+//echo "<form method='post'>";
+//$ez->renderTranslator();
+//echo "</form><br />";
 $ez->renderSupport();
-echo '</div>';
 include ($this->plgDir . '/tail-text.php');
 echo <<<EOF3
 <h3>Credits</h3>
