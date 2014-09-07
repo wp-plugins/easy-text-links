@@ -4,7 +4,7 @@
   Plugin Name: Easy Text Links
   Plugin URI: http://www.thulasidas.com/plugins/easy-text-links
   Description: <em>Lite Version</em>: Make money from your blog by direct text link ad selling, with no complicated setup and no middlemen.
-  Version: 2.10
+  Version: 2.20
   Author: Manoj Thulasidas
   Author URI: http://www.thulasidas.com
  */
