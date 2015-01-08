@@ -3,8 +3,8 @@ Contributors: manojtd
 Donate link: http://buy.thulasidas.com/easy-text-links
 Tags: text links, advertising, link ads, text ads, expiring links, text link ads, link sharing
 Requires at least: 3.5
-Tested up to: 4.0
-Stable tag: 2.21
+Tested up to: 4.1
+Stable tag: 2.30
 License: GPLv2 or later
 
 A robust and modern plugin to help you sell and manage text links on your blog.
@@ -42,7 +42,7 @@ A [pro version](http://buy.thulasidas.com/easy-text-links "Pro Version of Eazy T
 
 == Upgrade Notice ==
 
-Minor change to the admin interface.
+Compatibility with WP4.1.
 
 == Installation ==
 
@@ -101,6 +101,7 @@ Go to the admin page of the plugin, and edit the Sold Link by clicking on the ed
 
 == Change Log ==
 
+* V2.30: Compatibility with WP4.1. [Jan 8, 2015]
 * V2.21: Minor change to the admin interface. [Sep 9, 2011]
 * V2.20: Minor documentation changes. Compatibility with WordPress WP4.0. [SEP 7, 2014]
 * V2.10: Minor fixes. Compatibility with WordPress V3.9. [May 14, 2014]
