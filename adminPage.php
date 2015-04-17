@@ -36,9 +36,6 @@ $adminProdTable = $this->renderTable($this->options['products'], "adminProdTable
 $adminLinkTable = $this->renderTable($this->options['links'], "adminLinkTable");
 
 echo <<<EOF1
-<div id="loading">
-  <p><img src="{$this->plgURL}/loading.gif" alt="loading"/> Please Wait. Loading...</p>
-</div>
 {$this->linkToolBar}
 {$this->prodToolBar}
 {$this->popUp}
@@ -46,27 +43,28 @@ echo <<<EOF1
 <div class="wrap" id="ezlWrap" style="width:1000px;">
 <h2>Easy Text Links Setup </h2>
 <form method="post" action='{$_SERVER["REQUEST_URI"]}'>
-<table>
+<table id="ezlFormTable">
 <tr><td>
 <!--  Help Info here -->
+<span class='th'>Quick Start</span>
 <ul style="padding-left:10px;list-style-type:circle; list-style-position:inside;" >
 <li>
-<a href="#" title="Click for help" onclick="TagToTip('help0',WIDTH, 450, TITLE, 'What is this plugn for', STICKY, 1, CLOSEBTN, true, CLICKCLOSE, true, FIX, [this, 15, 5])">
+<a href="#" title="Click for help" onclick="TagToTip('help0',WIDTH, 350, TITLE, 'What is this plugn for', STICKY, 1, CLOSEBTN, true, CLICKCLOSE, true, FIX, [this, 5, 5])" onmouseover="Tip('Click for help')" onmouseout="UnTip()">
 What is this plugin for?
 </a>
 </li>
 <li>
-<a href="#" title="Click for help" onclick="TagToTip('help1',WIDTH, 450, TITLE, 'How to use this plugin', STICKY, 1, CLOSEBTN, true, CLICKCLOSE, true, FIX, [this, 15, 5])">
+<a href="#" title="Click for help" onclick="TagToTip('help1',WIDTH, 350, TITLE, 'How to use this plugin', STICKY, 1, CLOSEBTN, true, CLICKCLOSE, true, FIX, [this, 5, 5])" onmouseover="Tip('Click for help')" onmouseout="UnTip()">
 How to use this plugin?
 </a>
 </li>
 <li>
-<a href="#" title="Click for help" onclick="TagToTip('help2',WIDTH, 450, TITLE, 'List of shortcodes', STICKY, 1, CLOSEBTN, true, CLICKCLOSE, true, FIX, [this, 15, 5])">
+<a href="#" title="Click for help" onclick="TagToTip('help2',WIDTH, 350, TITLE, 'List of shortcodes', STICKY, 1, CLOSEBTN, true, CLICKCLOSE, true, FIX, [this, 5, 5])" onmouseover="Tip('Click for help')" onmouseout="UnTip()">
 How to use the shortcodes with this plugin?
 </a>
 </li>
 <li>
-<a href="#" title="Click for help" onclick="TagToTip('help3',WIDTH, 450, TITLE, 'How to modify a sold link or a link package', STICKY, 1, CLOSEBTN, true, CLICKCLOSE, true, FIX, [this, 15, 5])">
+<a href="#" title="Click for help" onclick="TagToTip('help3',WIDTH, 350, TITLE, 'How to modify a sold link or a link package', STICKY, 1, CLOSEBTN, true, CLICKCLOSE, true, FIX, [this, 5, 5])" onmouseover="Tip('Click for help')" onmouseout="UnTip()">
 How to modify a sold link or a link package?
 </a>
 </li>

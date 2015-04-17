@@ -4,7 +4,7 @@ Donate link: http://buy.thulasidas.com/easy-text-links
 Tags: text links, advertising, link ads, text ads, expiring links, text link ads, link sharing
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 2.30
+Stable tag: 2.40
 License: GPLv2 or later
 
 A robust and modern plugin to help you sell and manage text links on your blog.
@@ -33,27 +33,27 @@ If you have a popular blog, text links can potentially bring in much more revenu
 
 A [pro version](http://buy.thulasidas.com/easy-text-links "Pro Version of Eazy Text Links for $7.95") of this plugin is available with the following added features:
 
-1. Fully automated link sales and expiry (with the help of the [Easy PayPal](http://wordpress.org/extend/plugins/easy-paypal-lte/ "Easy PayPal Plugin") plugin available at WordPress.)
+1. Fully automated link sales and expiry (with the help of the [EZ PayPal](http://wordpress.org/extend/plugins/easy-paypal-lte/ "EZ PayPal Plugin") plugin available at WordPress.)
 2. Your advertisers will see "Buy Now" buttons to purchase links.
-3. Basic widget support.
-4. Automatic email reminders to you and your advertiser when the links are about to expire. (WIP)
-5. Choice of several attractive "Advertise Here" images. (WIP)
-6. Advanced widget support with a dedicated widget. (WIP)
+3. Ability to approve links before they show on your blog.
+4. Basic widget support.
+5. Automatic email reminders to you and your advertiser when the links are about to expire. (WIP)
+6. Choice of several attractive "Advertise Here" images. (WIP)
+7. Advanced widget support with a dedicated widget. (WIP)
 
 == Upgrade Notice ==
 
-Compatibility with WP4.1.
+Numerous improvements.
 
 == Installation ==
 
-You can install it using the WordPress Plugins -> Add New interface.
+= Searching =
 
-Or,
+The easiest way to install this plugin is to use the WordPress Admin interface. Go to your admin dashboard, find the "Plugins" menu, and click on "Add New". Search for this plugin and click on "Install Now" and follow the WordPress instructions.
 
-1. Upload the Easy Text Links plugin (the whole `easy-text-link` folder) to the '/wp-content/plugins/' directory.
-2. Activate the plugin through the 'Plugins' menu in your blog.
+= Uploading =
 
-To use the plugin, insert the shortcode `[ezlink]` in a post. See the FAQ for more information.
+If you want to download it and manually install, you can again use the WordPress dashboard interface. First download the plugin zip file to your local computer. Then go to your admin dashboard, find the "Plugins" menu, and click on "Add New". After clicking on the "Add New" menu item as above, click on "Upload" (below the title "Install Plugins" near the top). Browse for your downloaded zip file, upload it and activate the plugin.
 
 == Screenshots ==
 
@@ -101,6 +101,7 @@ Go to the admin page of the plugin, and edit the Sold Link by clicking on the ed
 
 == Change Log ==
 
+* V2.40: Numerous improvements. [April 18, 2015]
 * V2.30: Compatibility with WP4.1. [Jan 8, 2015]
 * V2.21: Minor change to the admin interface. [Sep 9, 2011]
 * V2.20: Minor documentation changes. Compatibility with WordPress WP4.0. [SEP 7, 2014]

@@ -4,7 +4,7 @@
   Plugin Name: Easy Text Links
   Plugin URI: http://www.thulasidas.com/plugins/easy-text-links
   Description: <em>Lite Version</em>: Make money from your blog by direct text link ad selling, with no complicated setup and no middlemen.
-  Version: 2.30
+  Version: 2.40
   Author: Manoj Thulasidas
   Author URI: http://www.thulasidas.com
  */
@@ -41,7 +41,7 @@ else {
     function EzlBase() {
       $this->plgURL = plugin_dir_url(__FILE__);
       $this->created = EzTextLinks::mkDateString(time());
-      $this->status = 'created';
+      $this->status = 'Created';
       $this->statusDate = $this->created;
     }
 
@@ -153,8 +153,7 @@ else {
       $created = EzTextLinks::mkDateString($product->created);
       $statusDate = EzTextLinks::mkDateString($product->statusDate);
       echo "<div id='{$formName}_form'>
-        <label for='product_code'>ID:<label>
-        <input id='dummy' disabled='disabled' style='height:0px;' />
+        <label for='product_code'>ID:</label>
         <input id='product_code' $noMod value='{$product->product_code}' />
         <label for='created'>Creation Date:</label>
         <input id='created' $noMod value='$created'/>
@@ -178,7 +177,7 @@ else {
     function getText() {
       if (strtolower($this->status) != 'deleted' &&
               strtolower($this->status) != 'hidden') {
-        return "<span class='ezlinkProdcut' id='{$this->product_code}'>{$this->product_name} for only {$this->product_price}</span>";
+        return "<span class='ezlinkProduct' id='{$this->product_code}'>{$this->product_name} for only {$this->product_price}</span>";
       }
       else {
         return "";
@@ -259,7 +258,7 @@ else {
       $expiry = EzTextLinks::mkDateString($this->expire_date);
       $message = str_replace(array('BLOG', 'EXPIRY'), array($blog, $expiry), $message);
       echo "<div id='email_form'>
-        <label for='to'>To:<label>
+        <label for='to'>To:</label>
         <input id='to' disabled='disabled' value='$to' />
         <label for='from'>From:</label>
         <input id='from' value='$from '/>
@@ -310,8 +309,8 @@ else {
     function expiry() {
       $expiry = EzTextLinks::mkDateString($this->expire_date);
       echo "<div id='expiry_form'>
-        <label for='expire_date'>New Expiry:<label>
-        <input id='expire_date' value='$expiry' />
+        <label for='expire_date'>New Expiry:</label>
+        <input id='expire_date' type='date' value='$expiry' />
         <br />
         <button id='expiry_confirm'  class='toolBar'
         style='background-image:url({$this->plgURL}/confirm.png)'></button>
@@ -349,8 +348,7 @@ else {
       $created = EzTextLinks::mkDateString($link->created);
       $statusDate = EzTextLinks::mkDateString($link->statusDate);
       echo "<div id='{$formName}_form'>
-        <label for='txn_id'>Link Id:<label>
-        <input id='dummy' disabled='disabled' style='height:0px;' />
+        <label for='txn_id'>Link Id:</label>
         <input id='txn_id' $noMod value='{$link->txn_id}' />
         <label for='created'>Creation Date:</label>
         <input id='created' $noMod value='$created'/>
@@ -359,7 +357,7 @@ else {
         <label for='customer_email'>Advertiser Email:</label>
         <input id='customer_mail' $disabled value='{$link->customer_email}' />
         <label for='expire_date'>Link Expiry Date:</label>
-        <input id='expire_date' $disabled value='$expiry' />
+        <input id='expire_date' type='date' $disabled value='$expiry' />
         <label for='text'>Link Text:</label>
         <textarea id='text' $disabled>$link->text</textarea>
         <label for='status'>Link Status:</label>
@@ -383,7 +381,7 @@ else {
           'created' => 'From',
           'expire_date' => 'Expiry',
 //          'product_code' => 'Package Name',
-          'text' => 'Text',
+          'text' => 'Link and Text',
           'status' => 'Status',
 //          'statusDate' => 'Effective'
       );
@@ -526,7 +524,7 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
       $link->customer_name = "Advertiser 1";
       $link->customer_email = "nobody@mail.com";
       $link->purchase_status = "active";
-      $link->expire_date = self::mkDateString("2014-03-17 13:17:31");
+      $link->expire_date = self::mkDateString(time()+ (7 * 24 * 60 * 60));
       $link->product_code = "package1";
       $link->setText("<a href='http://www.example1.com'>First Example Link Sale</a>");
       $links[$link->txn_id] = $link;
@@ -535,7 +533,7 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
       $link->customer_name = "Advertiser 2";
       $link->customer_email = "nobody@mail.com";
       $link->purchase_status = "active";
-      $link->expire_date = self::mkDateString("2015-03-17 13:17:31");
+      $link->expire_date = self::mkDateString(time()+ (7 * 24 * 60 * 60));
       $link->product_code = "package2";
       $link->setText("<a href='http://www.example2.com'>Second Example Link Sale</a>");
       $links[$link->txn_id] = $link;
@@ -600,7 +598,7 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
       if (!empty($id)) {
         $id = "id='$id'";
       }
-      $ret .= sprintf("<table class='ezlTable' $id><tr>");
+      $ret .= sprintf("<table class='ezlTable wp-list-table widefat' $id><tr>");
       foreach ($cols as $k => $v) {
         $ret .= sprintf("<th>%s</th>", $k);
       }
@@ -855,10 +853,10 @@ style='background-image:url({$this->plgURL}/delete.png)'></a>
         return "";
       }
       if (is_int($intOrStr)) {
-        $dateStr = date('Y-m-d H:i:s', $intOrStr);
+        $dateStr = date('Y-m-d', $intOrStr);
       }
       else {
-        $dateStr = date('Y-m-d H:i:s', strtotime($intOrStr));
+        $dateStr = date('Y-m-d', strtotime($intOrStr));
       }
       return $dateStr;
     }
@@ -885,7 +883,7 @@ if (!function_exists('ezprint')) {
 
 }
 if (class_exists("EzTextLinks")) {
-  $ezTextLinks = new Eztextlinks();
+  $ezTextLinks = new EzTextLinks();
   if (isset($ezTextLinks)) {
     add_shortcode(Eztextlinks::shortCode, array($ezTextLinks, 'handleShortcode'));
     add_action('wp_enqueue_scripts', array($ezTextLinks, 'addStyles'));
