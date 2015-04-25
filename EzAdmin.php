@@ -264,8 +264,6 @@ $moreInfo
       $s4 = __('Pro Version', 'easy-common');
       $s5 = __('Buy the Pro Version', 'easy-common');
 
-      // $select = rand(1, 4);
-      // <img src='{$this->cdn}/pro-$select.jpg' border='0' alt='Pro Version' style='display: block;margin-left:auto;margin-right:auto;max-height:100px' /></a>
       echo "<div style='background-color:#ffcccc;padding:5px;border:solid 1px;height:115px;overflow-y:auto;margin:0' onmouseover=\"TagToTip('pro', WIDTH, 300, TITLE, '$s5',STICKY, 1, CLOSEBTN, true, CLICKCLOSE, true, FIX, [this, -30, 5])\"><div style='font-size:14px;color:#a48;font-variant: small-caps;text-decoration:underline;text-align:center;'><b>$s4</b></div>";
 
       $s8 = sprintf(__('It costs only $%.2f!', 'easy-common'), $price);
