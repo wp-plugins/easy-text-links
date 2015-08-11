@@ -3,8 +3,8 @@ Contributors: manojtd
 Donate link: http://buy.thulasidas.com/easy-text-links
 Tags: text links, advertising, link ads, text ads, expiring links, text link ads, link sharing
 Requires at least: 3.5
-Tested up to: 4.2
-Stable tag: 2.50
+Tested up to: 4.3
+Stable tag: 2.60
 License: GPLv2 or later
 
 A robust and modern plugin to help you sell and manage text links on your blog.
@@ -17,7 +17,7 @@ Other plugins that do similar text link advertising do exist in the repository, 
 
 *Easy Text Links* keeps track of the expiry dates of the text links on your page, and removes them when expired. It also gives you easy means of sending a reminder email to the advertiser, block or delete the links all from your blog page itself, without having to go to the admin page. Of course, it is smart and secure so that only the blog admin with the right privileges will ever see the options to modify the links. It does all this magic using a modern AJAX/jQuery framework with an attractive lightbox effect.
 
-If you have a popular blog, text links can potentially bring in much more revenue than any contextual advertising. In my case, the difference was easily a factor of 100. Keep in mind, however, that most contextual ad providers (such as AdSense) do not like paid link placement, for obvious reasons. Your blog may get penalized in terms page rank or search listing placement. Please weigh the pros and cons carefully before embarking on text link advertising. If you do decide to go for it, this plugin will be able to help.
+If you have a popular blog, text links can potentially bring in much more revenue than any contextual advertising. In my case, the difference was easily a factor of 100. Keep in mind, however, that most contextual ad providers (such as AdSense) do not like paid link placement, for obvious reasons. Your blog may get penalized in terms of page rank or search listing placement. Please weigh the pros and cons carefully before embarking on text link advertising. If you do decide to go for it, this plugin will be able to help.
 
 = Features =
 
@@ -43,7 +43,7 @@ A [pro version](http://buy.thulasidas.com/easy-text-links "Pro Version of Eazy T
 
 == Upgrade Notice ==
 
-Compatibility with WordPress 4.2.
+Compatibility with WordPress 4.3.
 
 == Installation ==
 
@@ -101,6 +101,7 @@ Go to the admin page of the plugin, and edit the Sold Link by clicking on the ed
 
 == Change Log ==
 
+* V2.60: Compatibility with WordPress 4.3. [Aug 10, 2015]
 * V2.50: Compatibility with WordPress 4.2. [April 25, 2015]
 * V2.40: Numerous improvements. [April 18, 2015]
 * V2.30: Compatibility with WP4.1. [Jan 8, 2015]
